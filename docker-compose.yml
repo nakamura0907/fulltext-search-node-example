@@ -22,7 +22,7 @@ services:
       - ./services/solr:/var/solr
     command:
       - solr-precreate
-      - gettingstarted
+      - posts
 
   # elastic
   elastic:
@@ -38,3 +38,17 @@ services:
         soft: -1
         hard: -1
 
+  # mysql
+  mysql:
+    image: mysql:8.0-debian
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./services/mysql/data:/var/lib/mysql
+      - ./services/mysql/sql  

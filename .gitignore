@@ -2,3 +2,5 @@ node_modules
 
 services/solr/*
 !services/solr/.gitkeep
+
+services/mysql/data
