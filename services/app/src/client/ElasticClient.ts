@@ -21,7 +21,8 @@ export class ElasticClient {
                 id: model.id,
                 caption: model.caption,
                 createdAt: model.createdAt
-            }
+            },
+            id: model.id
         });
     }
 
@@ -32,8 +33,9 @@ export class ElasticClient {
         await this.client.bulk({
             operations: models.flatMap(doc => [{
                 index: {
-                    _index: this.INDEX_NAME
-                }
+                    _index: this.INDEX_NAME,
+                    _id: doc.id
+                },
             }, doc])
         })
     }
@@ -43,6 +45,7 @@ export class ElasticClient {
         return this.client.search({
             index: this.INDEX_NAME,
             body: {
+                min_score: 0.5,
                 query: {
                     match: {
                         caption: query
